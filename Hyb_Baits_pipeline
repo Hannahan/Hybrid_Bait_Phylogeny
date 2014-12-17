@@ -1,0 +1,206 @@
+# A pseudo_shell script for a pipeline to run from  recieving the raw reads to producing aligned nexus files for phylogenetics.
+
+#Requires:
+# bowtie2
+# cutadapt
+# trimmomatic
+# samtools
+
+
+# Set up bowtie2 index of the the bait set
+
+bowtie2-build Ref_new.fna Inga_unique_baits
+
+# Quality control snd trimming the reads for each accesssion
+
+# Examine reads
+
+while read f ; 
+do 
+
+fastqc "$f" ; 
+
+done < fastq_files
+
+#Initial trimming
+
+while read f ;
+do
+
+java -jar ~/Trimmomatic/Trimommatic-0.30/trimmomatic-0.30.jar PE -phred33 “$f”_1.sanfastq ”$f”_2sanfastq “$f”_forward_paired.fq.gz “$f”_forward_unpaired.fq.gz “$f”_reverse_paired.fq.gz “$f”_reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+done < acc_names
+
+# Further trimming using cutadapt to remove the reverse read adapters
+
+while read f ;
+do
+
+more_tidying.sh "$f"
+
+done < acc_names
+
+# check for paired ends using ck_empties.sh on the paired files
+
+while read f ;
+do
+
+ck_empties.sh "$f"
+
+done < acc_names
+
+# remove unparied reads using ck_remove.sh
+
+while read f ;
+do
+
+ck_remove.sh "$f"
+
+done < acc_names
+
+# Optimise the mapping intercept parameter for bowtie2 mapping on a test accession
+
+# Used bowtie_to_vcf.sh which allow you to pick intercept range and steps
+
+bowtie_to_vcf.sh 
+
+# mine the vcf file for stats
+
+Number of reads:
+grep -c "comp" TAKPDCBCI97_220.vcf
+
+average Qual of reads:
+grep  "comp" TAKPDCBCI97_220.vcf | awk 'BEGIN {max=0} {sum+=$6; if ($6>max) {max=$6}} END {print "Average qual: "sum/NR "\tMax qual: " max}' TAKPDCBCI97_220.vcf
+
+average Qual of non-varient
+grep  "comp" TAKPDCBCI97_220.vcf | awk '{ if ($5 == ".") print $0 }' |awk 'BEGIN {max=0} {sum+=$6; if ($6>max) {max=$6}} END {print "Average qual: "sum/NR "\tMax qual: " max}'
+
+average qual of variant:
+grep  "comp" TAKPDCBCI97_220.vcf | awk '{ if ($5 != ".") print $0 }' |awk 'BEGIN {max=0} {sum+=$6; if ($6>max) {max=$6}} END {print "Average qual: "sum/NR "\tMax qual: " max}'
+
+Number of variants
+grep  "comp" TAKPDCBCI97_220.vcf | awk '{ if ($5 != ".") print $0 }'| wc -l
+
+Number of non_varient
+grep  "comp" TAKPDCBCI97_220.vcf | awk '{ if ($5 == ".") print $0 }'| wc -l 
+
+# bowtie reads to baits using agreed intercept to produce a vcf file.
+
+while read f;
+do
+
+bam_me.sh "$f"
+
+done < acc_names
+
+
+# Get read counts  
+
+while read f ; 
+do 
+
+samtools idxstats "$f"_sorted.bam |grep -v "^\*" | awk '{ depth=250*$3/$2} {print $1, depth}' | sort > "$f"_rc ; 
+
+done < acc_names
+
+
+$ paste *_rc | sed 's/comp[0-9]*_c[0-9]_seq[0-9]*//g' > all.txt
+
+paste l_names all.txt > output.txt
+
+# Edit vcf file to remove indels and calls wiht quality less than 36.  Outputs the consensus fasta
+
+while read f;
+do
+
+clean_vcf.sh;
+
+done < acc_names
+
+clean.vcf,sh
+
+# remove ambiguities 
+
+while read f ; 
+do 
+
+sed ’s/[RYWSMKDVHB]/N/g’ “$f”.fasta > “$f”.fna ; 
+
+done < acc_names 
+
+# Convert from multifastas of loci per accession to multifasta of accession per locus
+# Need a folder called By_locus, a list of loci called “locus_list” and a list of files called “fasta_files”
+
+switch multifastas_full_output.py
+
+# Replace name of seq with just the accession:
+
+while read f ;
+do 
+
+sed ’s/‘\.fn”$f”’//g’ "$f”.fasta > "$f".fna ; 
+
+done < locus_list
+
+#Make all uppercase
+
+while read f ; 
+do 
+
+tr '[:lower:]'  '[:upper:]' < "$f".fna > "$f".fasta ; 
+
+done <  locus_list
+
+# Mafft algin
+
+while read f ; 
+do 
+
+linsi --thread 8 "$f”.fasta > "$f"_mafft.fna; 
+
+done < locus_list
+
+To help with this write 
+f_tidy.sh
+
+In folder called Subsets in bamming
+
+need a folder called By_locus, a list of loci called “locus_list” and a list of files called “fasta_files”
+
+# Use trimmal to trim the alignemnts of gappy regions and output as nexus for PAUP
+
+while read f ; 
+do 
+
+trimal -in "$f"_mafft.fna -out "$f"_strict_trimmed.fasta -strict -nexus ; 
+
+done < locus_list
+
+Modify nexus files for PAUP input and run
+
+while read f ; do cat "$f" commandQ > try_"$f"; done < files
+while read f ; do sed 's/filename/'"$f"'/g' try_"$f" > go_"$f";
+done < files
+
+while read f ; do paup -n go_"$f"; done < files
+
+Final - doing 21:10 done 21:17
+Hyb3 - doing 21:18 done 21:22
+Umb_sl - doing 21:12 done 21:14
+Umb_ss - doing 21:15, done 21:17
+
+grep "Number of parsimony-informative" *paup_out > PI_char.txt
+grep  "parsimony-uninformative" *paup_out > Variable.txt
+grep "total characters" *paup_out > Total_char.txt
+grep "constant" *paup_out > Constant_char.txt
+
+grep -L "parsimony-uninformative" *paup_out
+
+umb_sl
+Hyb3
+Final_tree
+umb_ss
+
+Put into excel
+
+raxmlHPC -m GTRGAMMA -p 12345 -s concat_stringent_new.phy -# 20 -n T6 
