@@ -1,6 +1,7 @@
 #! /bin/bash -x
 # to trim again using cutadapt
 #Catherine Kidner 28 Oct 2014
+# Assumes all your reads are in a folder called trimmed and all are gzipped.
 
 echo "Hello world"
 

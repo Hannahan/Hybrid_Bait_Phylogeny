@@ -10,7 +10,9 @@
 
 # Also our scripts:
 
-
+# more_tidying.sh
+# ck_empties.sh
+# ck_remove.sh
 
 
 # Set up bowtie2 index of the the bait set
@@ -117,11 +119,10 @@ paste acc_names all.txt > output.txt
 while read f;
 do
 
-clean_vcf.sh;
+clean_vcf.sh "$f";
 
 done < acc_names
 
-clean.vcf,sh
 
 # remove ambiguities 
 
@@ -138,11 +139,12 @@ done < acc_names
 switch_multifastas_full_output.py
 
 # Replace name of seq with just the accession:
+# In the By_locus folder with locus_list copied in 
 
 while read f ;
 do 
 
-sed ’s/‘\.fn”$f”’//g’ "$f”.fasta > "$f".fna ; 
+sed ’s/\.fn'”$f”’//g’ "$f”.fasta > "$f".fna ; 
 
 done < locus_list
 
@@ -160,16 +162,13 @@ done <  locus_list
 while read f ; 
 do 
 
-linsi --thread 8 "$f”.fasta > "$f"_mafft.fna; 
+linsi --thread 8 "$f”.fasta > "$f"_mafft.fasta; 
 
 done < locus_list
 
 To help with this write 
 f_tidy.sh
 
-In folder called Subsets in bamming
-
-need a folder called By_locus, a list of loci called “locus_list” and a list of files called “fasta_files”
 
 # Use trimmal to trim the alignemnts of gappy regions and output as nexus for PAUP
 
