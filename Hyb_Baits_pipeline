@@ -1,18 +1,23 @@
 # A pseudo_shell script for a pipeline to run from  recieving the raw reads to producing aligned nexus files for phylogenetics.
 
-#Requires:
+# Requires:
 # bowtie2
 # cutadapt
 # trimmomatic
 # samtools
+# Trimal
+# PAUP
+
+# Also our scripts:
+
+
 
 
 # Set up bowtie2 index of the the bait set
 
 bowtie2-build Ref_new.fna Inga_unique_baits
 
-# Quality control snd trimming the reads for each accesssion
-
+# Quality control and trimming the reads for each accesssion
 # Examine reads
 
 while read f ; 
@@ -103,10 +108,9 @@ samtools idxstats "$f"_sorted.bam |grep -v "^\*" | awk '{ depth=250*$3/$2} {prin
 
 done < acc_names
 
+paste *_rc | sed 's/comp[0-9]*_c[0-9]_seq[0-9]*//g' > all.txt
 
-$ paste *_rc | sed 's/comp[0-9]*_c[0-9]_seq[0-9]*//g' > all.txt
-
-paste l_names all.txt > output.txt
+paste acc_names all.txt > output.txt
 
 # Edit vcf file to remove indels and calls wiht quality less than 36.  Outputs the consensus fasta
 
@@ -131,7 +135,7 @@ done < acc_names
 # Convert from multifastas of loci per accession to multifasta of accession per locus
 # Need a folder called By_locus, a list of loci called “locus_list” and a list of files called “fasta_files”
 
-switch multifastas_full_output.py
+switch_multifastas_full_output.py
 
 # Replace name of seq with just the accession:
 
