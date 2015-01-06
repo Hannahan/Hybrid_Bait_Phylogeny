@@ -4,7 +4,7 @@ cannot cope with missing data.  Assumes if data is missing for a locus for an ac
 #read in file lists
 
 #nexusfile_list = "nexus_files"
-#locus_list_file = "locus_list"
+#accession_list_file = "acc_names"
 
 # Read in the seq data to a holding file
 # when read "MATRIX": next line is the beginning of the data
