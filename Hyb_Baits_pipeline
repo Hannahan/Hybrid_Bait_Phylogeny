@@ -29,12 +29,18 @@ fastqc "$f" ;
 
 done < fastq_files
 
+#Quick overview
+
+while read f ; do paste "$f".sa_fastqc/summary.txt >> FastQC_Summary.txt ; done < Acc_names
+
+#Look in detail at any problematic ones
+
 #Initial trimming
 
 while read f ;
 do
 
-java -jar ~/Trimmomatic/Trimommatic-0.30/trimmomatic-0.30.jar PE -phred33 “$f”_1.sanfastq ”$f”_2sanfastq “$f”_forward_paired.fq.gz “$f”_forward_unpaired.fq.gz “$f”_reverse_paired.fq.gz “$f”_reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+java -jar ~/Trimmomatic/Trimmomatic-0.30/trimmomatic-0.30.jar PE -phred33 “$f”_1.sanfastq.gz ”$f”_2.sanfastq.gz “$f”_forward_paired.fq.gz “$f”_forward_unpaired.fq.gz “$f”_reverse_paired.fq.gz “$f”_reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 
 done < acc_names
 
@@ -43,25 +49,7 @@ done < acc_names
 while read f ;
 do
 
-more_tidying.sh "$f"
-
-done < acc_names
-
-# check for paired ends using ck_empties.sh on the paired files
-
-while read f ;
-do
-
-ck_empties.sh "$f"
-
-done < acc_names
-
-# remove unparied reads using ck_remove.sh
-
-while read f ;
-do
-
-ck_remove.sh "$f"
+./more_tidying.sh "$f"
 
 done < acc_names
 
