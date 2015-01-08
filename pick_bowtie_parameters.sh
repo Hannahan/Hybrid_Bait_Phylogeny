@@ -15,6 +15,10 @@ read step
 
 intercept=$n1
 
+while [ $intercept -le $n2 ]
+
+do
+
 score=G,${intercept},8
 fwd_p=../trimmed/${acc}_trimmed_1.fastq.gz
 rev_p=../trimmed/${acc}_trimmed_2.fastq.gz
@@ -25,11 +29,6 @@ pileup=${acc}_${intercept}.pileup
 vcf=${acc}_${intercept}.vcf
 bowtie=${acc}_${intercept}_bowtie_output
 sorted=${acc}_${intercept}_sorted
-
-
-while [ $intercept -le $n2 ]
-
-do
 
 bowtie2 --local --score-min $score -x ~/bowtie2-2.0.2/Inga_unique_baits -1 $fwd_p  -2 $rev_p  -U $un_p  -S $sam 2>$bowtie
 samtools view -bS $sam | samtools sort - $sorted

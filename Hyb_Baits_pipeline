@@ -55,29 +55,13 @@ done < acc_names
 
 # Optimise the mapping intercept parameter for bowtie2 mapping on a test accession
 
-# Used bowtie_to_vcf.sh which allow you to pick intercept range and steps
+# Used pick_bowtie_paramters.sh which allows you to pick intercept range and steps
 
-bowtie_to_vcf.sh 
+pick_bowtie_paramters.sh
 
 # mine the vcf file for stats
 
-Number of reads:
-grep -c "comp" TAKPDCBCI97_220.vcf
-
-average Qual of reads:
-grep  "comp" TAKPDCBCI97_220.vcf | awk 'BEGIN {max=0} {sum+=$6; if ($6>max) {max=$6}} END {print "Average qual: "sum/NR "\tMax qual: " max}' TAKPDCBCI97_220.vcf
-
-average Qual of non-varient
-grep  "comp" TAKPDCBCI97_220.vcf | awk '{ if ($5 == ".") print $0 }' |awk 'BEGIN {max=0} {sum+=$6; if ($6>max) {max=$6}} END {print "Average qual: "sum/NR "\tMax qual: " max}'
-
-average qual of variant:
-grep  "comp" TAKPDCBCI97_220.vcf | awk '{ if ($5 != ".") print $0 }' |awk 'BEGIN {max=0} {sum+=$6; if ($6>max) {max=$6}} END {print "Average qual: "sum/NR "\tMax qual: " max}'
-
-Number of variants
-grep  "comp" TAKPDCBCI97_220.vcf | awk '{ if ($5 != ".") print $0 }'| wc -l
-
-Number of non_varient
-grep  "comp" TAKPDCBCI97_220.vcf | awk '{ if ($5 == ".") print $0 }'| wc -l 
+get_vcf_stats.sh
 
 # bowtie reads to baits using agreed intercept to produce a vcf file.
 

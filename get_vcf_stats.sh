@@ -15,7 +15,7 @@ read step
 
 intercept=$n1
 alltog=${acc}_stats.txt
-echo "%_aligned,N_reads,Av_Qual_reads,Max_Qual_reads,Av_Qual_non_varient,Max_Qual_non_varient,Av_Qual_varient,Max_Qual_varient,N_varient,N_non_varient" > $alltog
+echo "%_aligned,N_bases,Av_Qual_reads,Max_Qual_reads,Av_Qual_non_varient,Max_Qual_non_varient,Av_Qual_varient,Max_Qual_varient,N_varient,N_non_varient" > $alltog
 
 while [ $intercept -le $n2 ]
 
