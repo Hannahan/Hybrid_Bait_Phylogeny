@@ -84,7 +84,11 @@ done < acc_names
 
 paste *_rc | sed 's/comp[0-9]*_c[0-9]_seq[0-9]*//g' > all.txt
 
-paste acc_names all.txt > output.txt
+awk ‘{print $1}’ BCI_97_rc | > loci_list
+
+paste -s acc_names > acc_titles
+cat acc_titles all.txt  > g
+paste loci_titles g  > output.txt
 
 # Edit vcf file to remove indels and calls wiht quality less than 36.  Outputs the consensus fasta
 
@@ -94,7 +98,6 @@ do
 clean_vcf.sh "$f";
 
 done < acc_names
-
 
 # remove ambiguities 
 
