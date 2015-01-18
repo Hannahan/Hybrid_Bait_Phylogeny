@@ -15,7 +15,7 @@ no_loci_name= ${acc}.fna
 mafft=${acc}_mafft.fasta
 fna=${acc}.fna
 
-sed ’s/‘\.fn$acc//g’ $switched > $no_loci_name 
+sed ’s/‘\_$acc//g’ $switched > $no_loci_name 
 linsi --thread 8 $switched > $fna
 tr '[:lower:]'  '[:upper:]' < $fna > $mafft
 
