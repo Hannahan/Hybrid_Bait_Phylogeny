@@ -162,11 +162,6 @@ done < files
 
 while read f ; do paup -n go_"$f"; done < files
 
-Final - doing 21:10 done 21:17
-Hyb3 - doing 21:18 done 21:22
-Umb_sl - doing 21:12 done 21:14
-Umb_ss - doing 21:15, done 21:17
-
 grep "Number of parsimony-informative" *paup_out > PI_char.txt
 grep  "parsimony-uninformative" *paup_out > Variable.txt
 grep "total characters" *paup_out > Total_char.txt
@@ -180,5 +175,7 @@ Final_tree
 umb_ss
 
 Put into excel
+
+Run quick raxML tree
 
 raxmlHPC -m GTRGAMMA -p 12345 -s concat_stringent_new.phy -# 20 -n T6 
