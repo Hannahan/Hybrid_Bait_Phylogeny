@@ -49,7 +49,7 @@ if fastafile_list != None:
 	fastafiles = open(fastafile_list)
 	for file_name in fastafiles: 
 		file_name = file_name.rstrip("\n")
-		accession = file_name.rstrip(".fa")
+		accession = file_name.rstrip(".fna")
 
 		#Make a dict of that fasta file
 
