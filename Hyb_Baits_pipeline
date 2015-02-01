@@ -1,4 +1,4 @@
-# A pseudo_shell script for a pipeline to run from  recieving the raw reads to producing aligned nexus files for phylogenetics.
+# A pseudo_shell script for a pipeline to run from receiving the raw reads to producing aligned nexus files for phylogenetics.
 
 # Requires:
 # bowtie2
@@ -22,12 +22,7 @@ bowtie2-build Ref_new.fna Inga_unique_baits
 # Quality control and trimming the reads for each accesssion
 # Examine reads
 
-while read f ; 
-do 
-
-fastqc "$f" ; 
-
-done < fastq_files
+while read f ; do fastqc "$f" ; done < fastq_files
 
 #Quick overview
 
@@ -46,12 +41,7 @@ done < acc_names
 
 # Further trimming using cutadapt to remove the reverse read adapters
 
-while read f ;
-do
-
-./more_tidying.sh "$f"
-
-done < acc_names
+while read f ; do ./more_tidying.sh "$f" ; done < acc_names
 
 # Optimise the mapping intercept parameter for bowtie2 mapping on a test accession
 
@@ -65,12 +55,7 @@ get_vcf_stats.sh
 
 # bowtie reads to baits using agreed intercept to produce a vcf file.
 
-while read f;
-do
-
-bam_me.sh "$f"
-
-done < acc_names
+while read f; do bam_me.sh "$f" ; done < acc_names
 
 
 # Get read counts  
