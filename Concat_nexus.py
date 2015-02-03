@@ -42,7 +42,7 @@ def count_bp(block, name):
 nexus_list_file = input("Which list of nexus files (full file name please)?\n")
 accession_list_file = input("Which file for names of accessions?\n")
 
-#open files for each locus (for reading and writting) ready to feed in the nexuses
+#open files for each locus (for reading and writing) ready to feed in the nexuses
 
 if accession_list_file != None:
 	acc_list = open(accession_list_file)
@@ -54,7 +54,7 @@ if accession_list_file != None:
 picked = acc_name_list[0]
 n_acc = len(acc_name_list)
 
-print( str(picked))
+print(str(picked))
 
 all_blocks = []
 
@@ -67,46 +67,50 @@ if nexus_list_file != None:
 	for nexus_file in nexus_file_list:
 		nexus_file = nexus_file.rstrip()
 		new_block = get_block(nexus_file)
+		locus_name = nexus_file.rstrip(".nex")
+#		all_blocks.append("[" + str(locus_name) +"]")
 		all_blocks = all_blocks + new_block
 		locus_count = count_bp(new_block, picked)
 		bp_end = bp_beg + locus_count - 1
 		print("Locus count is " + str(locus_count))
-		locus_name = nexus_file.rstrip(".nex")
-		char_line = "CHARSET " + str(locus_name) + " = " + str(bp_beg) + " - " + str(bp_end) + " ;"
+		char_line = "charset " + str(locus_name) + " = " + str(bp_beg) + " - " + str(bp_end) + ";"
 		char_block.append(char_line)
 		bp_beg = bp_end + 1
-		print("Accumlulated bp is " + str(bp_end))
+		print("Accumulated bp is " + str(bp_end))
 
 total_bp = count_bp(all_blocks, picked)
 print ("Total_bp is " + str(total_bp))
 
 # rebuild the header
 
-header_1 = "BEGIN DATA;"
-header_2 = "DIMENSIONS NTAX=" + str(n_acc) + " NCHAR=" + str(bp_end) + ";"
-header_3 = "FORMAT DATATYPE=DNA INTERLEAVE=yes GAP=-;"
+header_1 = "#NEXUS\n"
+header_2 = "begin data;"
+header_3 = "dimensions ntax=" + str(n_acc) + " nchar=" + str(bp_end) + ";"
+header_4 = "format datatype=DNA interleave=yes gap=-;\n"
+header_5 = "matrix"
 
-header_list = [header_1, header_2, header_3]
+header_list = [header_1, header_2, header_3, header_4, header_5]
 
-acc_data = []
-for acc_name in acc_name_list:
-	line = "[Name: " + str(acc_name) + "			Len: " + str(bp_end) + " Check: 0]"
-	acc_data.append(line)
-acc_data.append("")
-acc_data.append("MATRIX")
+# don't need this bit as the acc_data stuff is added by trimal to individual nexus files 
+#acc_data = []
+#for acc_name in acc_name_list:
+#	line = "[Name: " + str(acc_name) + "			Len: " + str(bp_end) + " Check: 0]"
+#	acc_data.append(line)
+#acc_data.append("")
+#acc_data.append("MATRIX")
 
-footer_1 = ""
-footer_2 =  ";"
-footer_3 = "END;"
-footer_4 = ""
+footer_1 = ";"
+footer_2 = "end;"
+footer_3 = ""
 
 footer_list = [footer_1, footer_2, footer_3]
 
 
-char_block.insert(0,"BEGIN SETS;")
-char_block.append("END;")
+char_block.insert(0,"begin sets;")
+char_block.append("end;")
 
-new_nexus_list = header_list + acc_data + all_blocks + footer_list + char_block
+#new_nexus_list = header_list + acc_data + all_blocks + footer_list + char_block
+new_nexus_list = header_list + all_blocks + footer_list + char_block
 
 new_nexus = '\n'.join(new_nexus_list)
 

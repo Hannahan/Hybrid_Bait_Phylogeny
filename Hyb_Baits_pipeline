@@ -13,11 +13,19 @@
 # more_tidying.sh
 # ck_empties.sh
 # ck_remove.sh
+# bam_me.sh
+# pick_bowtie_parameters.sh
+# get_vcf_stats.sh
+# clean_vcf.sh
+# tidy_mafft.sh 
+# Concat_nexus.py
+
+
 
 
 # Set up bowtie2 index of the the bait set
 
-bowtie2-build Ref_new.fna Inga_unique_baits
+bowtie2-build Ref.fna Inga_unique_baits
 
 # Quality control and trimming the reads for each accesssion
 # Examine reads
@@ -47,7 +55,7 @@ while read f ; do ./more_tidying.sh "$f" ; done < acc_names
 
 # Used pick_bowtie_paramters.sh which allows you to pick intercept range and steps
 
-pick_bowtie_paramters.sh
+pick_bowtie_parameters.sh
 
 # mine the vcf file for stats
 
@@ -57,7 +65,11 @@ get_vcf_stats.sh
 
 # bowtie reads to baits using agreed intercept to produce a vcf file.
 
-while read f; do bam_me.sh "$f" ; done < acc_names
+while read f; 
+
+do bam_me.sh "$f" ; 
+
+done < acc_names
 
 
 # Get read counts  
@@ -98,14 +110,14 @@ done < acc_names
 # Convert from multifastas of loci per accession to multifasta of accession per locus
 # Need a folder called By_locus, a list of loci called “locus_list” and a list of files called “fasta_files”
 
-switch_multifastas_full_output.py
+switch_multifastas.py
 
 # Replace name of seq with just the accession, convert bases to uppercase, mafft align
 
 while read f ;
 do
 
-f_tidy.sh “$f”
+tidy_mafft.sh “$f”
 
 done < accession _list
 
