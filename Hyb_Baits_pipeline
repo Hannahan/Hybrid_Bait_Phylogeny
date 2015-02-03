@@ -53,6 +53,8 @@ pick_bowtie_paramters.sh
 
 get_vcf_stats.sh
 
+#Decide which settings you are happy with mapping fewest paralogs together
+
 # bowtie reads to baits using agreed intercept to produce a vcf file.
 
 while read f; do bam_me.sh "$f" ; done < acc_names
@@ -75,7 +77,7 @@ paste -s acc_names > acc_titles
 cat acc_titles all.txt  > g
 paste loci_titles g  > output.txt
 
-# Edit vcf file to remove indels and calls wiht quality less than 36.  Outputs the consensus fasta
+# Edit vcf file to remove indels and calls with quality less than 36.  Outputs the consensus fasta
 
 while read f;
 do
@@ -84,7 +86,7 @@ clean_vcf.sh "$f";
 
 done < acc_names
 
-# remove ambiguities 
+# Replace ambiguities with Ns
 
 while read f ; 
 do 
@@ -98,48 +100,25 @@ done < acc_names
 
 switch_multifastas_full_output.py
 
-# Replace name of seq with just the accession:
-# In the By_locus folder with locus_list copied in 
+# Replace name of seq with just the accession, convert bases to uppercase, mafft align
 
 while read f ;
-do 
+do
 
-sed ’s/\.fn'”$f”’//g’ "$f”.fasta > "$f".fna ; 
+f_tidy.sh “$f”
 
-done < locus_list
-
-#Make all uppercase
-
-while read f ; 
-do 
-
-tr '[:lower:]'  '[:upper:]' < "$f".fna > "$f".fasta ; 
-
-done <  locus_list
-
-# Mafft algin
-
-while read f ; 
-do 
-
-linsi --thread 8 "$f”.fasta > "$f"_mafft.fasta; 
-
-done < locus_list
-
-To help with this write 
-f_tidy.sh
-
+done < accession _list
 
 # Use trimmal to trim the alignemnts of gappy regions and output as nexus for PAUP
 
 while read f ; 
 do 
 
-trimal -in "$f"_mafft.fna -out "$f"_strict_trimmed.fasta -strict -nexus ; 
+trimal -in "$f"_mafft.fna -out "$f"_strict_trimmed.nex -strict -nexus ; 
 
 done < locus_list
 
-Modify nexus files for PAUP input and run
+# Modify nexus files for PAUP input and run
 
 while read f ; do cat "$f" commandQ > try_"$f"; done < files
 while read f ; do sed 's/filename/'"$f"'/g' try_"$f" > go_"$f";
@@ -147,20 +126,24 @@ done < files
 
 while read f ; do paup -n go_"$f"; done < files
 
+
+# Gather variation stats from PAUP output
+
 grep "Number of parsimony-informative" *paup_out > PI_char.txt
 grep  "parsimony-uninformative" *paup_out > Variable.txt
 grep "total characters" *paup_out > Total_char.txt
 grep "constant" *paup_out > Constant_char.txt
-
 grep -L "parsimony-uninformative" *paup_out
 
-umb_sl
-Hyb3
-Final_tree
-umb_ss
+# Concatenate loci nexus files into a single “bucket” and trimmal.
 
-Put into excel
+# List chosen loci’s nexus file names in a text file called “nexus_files"
+# List accessions in a text file called  = "acc_names"
 
-Run quick raxML tree
+Concat_nexus.py
+
+trimal -in concat.nex -out concat_trimmed.nex -strict -nexus
+
+# Run quick raxML tree
 
 raxmlHPC -m GTRGAMMA -p 12345 -s concat_stringent_new.phy -# 20 -n T6 
