@@ -1,9 +1,9 @@
 #! /bin/bash -x
-# mining vcf fiesl for qulaity stats
+# mining vcf fiesl for quality stats
 # Catherine Kidner 6 January 2015
 
 echo "Hello world"
-echo -n "Which accession would you like to gather the alignemtn stats for?  Type just the accession name  "
+echo -n "Which accession would you like to gather the alignment stats for?  Type just the accession name  "
 read acc
 echo "You picked to work with: $acc  "
 echo -n "which starting intercept did you use?  "
