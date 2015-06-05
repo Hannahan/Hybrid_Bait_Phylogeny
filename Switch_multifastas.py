@@ -65,7 +65,6 @@ if fastafile_list != None:
 			for name in locus_list:
 				name = name.rstrip("\n")
 				found_fasta = ">" +  accession + "_" + name + "\n"
-				print("Found_name =" + found_fasta)
 				keep_lines_processed += 1
 
 
@@ -76,7 +75,6 @@ if fastafile_list != None:
 					missing_list.append(name)
 
 				found_fasta = found_fasta + fasta_seq + "\n"
-				print("Found fasta seq =" + found_fasta)
 				locus_file_to_write = "By_locus/" + name + ".fasta"
 				with open(locus_file_to_write, "a") as myfile:
 					myfile.write(found_fasta)
