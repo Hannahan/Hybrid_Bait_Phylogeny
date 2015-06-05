@@ -57,6 +57,7 @@ if fastafile_list != None:
 
 		keep_lines_processed = 0
 		keep_seq_found = 0
+		missing_list = []
 
 		if locus_list_file != None:
 			locus_list = open(locus_list_file)
@@ -66,7 +67,7 @@ if fastafile_list != None:
 				found_fasta = ">" +  accession + "_" + name + "\n"
 
 				keep_lines_processed += 1
-				missing_list = []
+
 
 				fasta_seq = ifasta_dict.get(name, "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
 				if name in ifasta_dict.keys():
