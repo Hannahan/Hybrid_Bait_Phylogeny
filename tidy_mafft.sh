@@ -11,11 +11,11 @@ echo "You're working on accession $1"
 
 
 switched=${acc}.fasta
-no_loci_name= ${acc}.fna
+no_loci_name=${acc}.fna
 mafft=${acc}_mafft.fasta
 fna=${acc}.fna
 
-sed ’s/‘\_$acc//g’ $switched > $no_loci_name 
+sed 's/‘\_$acc//g’ $switched > $no_loci_name 
 tr '[:lower:]'  '[:upper:]' < $no_loci_name > $fna
 linsi --thread 8 $fna > $mafft
 
