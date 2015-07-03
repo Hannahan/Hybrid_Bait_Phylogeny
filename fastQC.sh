@@ -6,13 +6,9 @@
 echo "Hello world"
 
 acc=$1
+call=${acc}
 
-echo "You're working on accession $1"
-
-
-call=get EvoDevo/Hyb_Hiseq_96/raw_reads/${acc}
-
-smbclient //nased05/EvoDevo -U rbg-nt\\ckidner%password -c ''call''
+smbclient //nased05/EvoDevo -U rbg-nt\\ckidner%t@tws2bresych -c "$call"
 fastqc *.gz
 rm *.gz
 
