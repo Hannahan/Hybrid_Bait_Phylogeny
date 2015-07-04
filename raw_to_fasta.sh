@@ -25,15 +25,12 @@ cutadapt -a AGATCGGAAGAGC forward_paired.fq.gz > f_paired.fq.gz 2>> cut_out
 cutadapt -a AGATCGGAAGAGC reverse_paired.fq.gz > r_paired.fq.gz 2>> cut_out
 cutadapt -a AGATCGGAAGAGC forward_unpaired.fq.gz > f_unpaired.fq.gz 2>> cut_out
 cutadapt -a AGATCGGAAGAGC reverse_unpaired.fq.gz > r_unpaired.fq.gz 2>> cut_out
-./ck_empties_fastq.sh $acc
-./ck_remove_fastq.sh $acc
 
-sam=${acc}.sam
-index=${acc}_sorted.bam
-pileup=${acc}.pileup
-vcf=${acc}.vcf
-bowtie=${acc}_bowtie_output
-sorted=${acc}_sorted
+#remove unpaired
+cat f_paired.fq.gz r_paired.fq.gz | grep -B1 "^$" | grep "^@" | cut -f1 -d " " - > All.empties
+
+cat r_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 2.fastq.test.gz; mv 2.fastq.test.gz r_paired.fq.gz
+cat f_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 1.fastq.test.gz; mv 1.fastq.test.gz f_paired.fq.gz
 
 bowtie2 --local --score-min $score -x ~/bowtie2-2.0.2/Inga_unique_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U f_unpaired.fq.gz,r_unpaired.fq.gz  -S output.sam 2>bowtie_output
 samtools view -bS output.sam | samtools sort - bam_sorted
