@@ -117,9 +117,9 @@ switch_multifastas.py
 while read f ;
 do
 
-tidy_mafft.sh “$f”
+f_tidy.sh “$f”
 
-done < accession _list
+done < locus_list
 
 # Use trimmal to trim the alignemnts of gappy regions and output as nexus for PAUP
 
@@ -129,6 +129,7 @@ do
 trimal -in "$f"_mafft.fna -out "$f"_strict_trimmed.nex -strict -nexus ; 
 
 done < locus_list
+
 
 # Modify nexus files for PAUP input and run
 
