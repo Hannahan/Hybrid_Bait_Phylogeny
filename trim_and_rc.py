@@ -15,7 +15,7 @@ def call_me(name1):
 
 def bowtie_me(name1):
         try:
-                my_command = "bowtie2 —-local --score-min G,130,8 -x ~/bowtie2-2.0.2/All_baits -1 f_paired.fq.gz -2 r_paired.fq.gz  -U f_unpaired.fq.gz,r_unpaired.fq.gz -S output.sam 2>" +str(name1) + "_bowtie_out"
+                my_command = "bowtie2 --local --score-min G,130,8 -x ~/bowtie2-2.0.2/All_baits -1 f_paired.fq.gz -2 r_paired.fq.gz -U f_unpaired.fq.gz,r_unpaired.fq.gz -S output.sam 2> " +str(name1) + "_bowtie_out"
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
                 print ("Problems with bowtie")
@@ -69,9 +69,9 @@ for line in list:
         name1 = bits[0]
         name1 = name1.rstrip()
         print ("Trying call on" + str(name1))
-        call_me(name1)
+#        call_me(name1)
         print ("Trying untar on" + str(name1))
-        untar(name1)
+#        untar(name1)
         print ("Trying bowtie on" + str(name1))
         bowtie_me(name1)
         print ("Trying sort on" + str(name1))
@@ -79,8 +79,8 @@ for line in list:
         print ("Trying get_rc on" + str(name1))
         get_rc(name1)
         print ("Trying clean_up reads on" + str(name1))
-        clean_up_reads(name1)
+#        clean_up_reads(name1)
         print ("Trying clean_up bams and sams on" + str(name1))
-        clean_up_bams(name1)
+#        clean_up_bams(name1)
 
 print ("Done with the list")
