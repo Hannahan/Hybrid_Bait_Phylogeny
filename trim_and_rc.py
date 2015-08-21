@@ -4,7 +4,6 @@
 
 import subprocess
 import re
-import time
 
 def call_me(name1):
         try:
@@ -71,7 +70,6 @@ for line in list:
         name1 = name1.rstrip()
         print ("Trying call on" + str(name1))
         call_me(name1)
-        time.sleep(60)
         print ("Trying untar on" + str(name1))
         untar(name1)
         print ("Trying bowtie on" + str(name1))
