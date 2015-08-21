@@ -16,10 +16,10 @@ samtools index bam_sorted.bam
 samtools mpileup -E -uf total_gene_selection.fna  bam_sorted.bam > output.pileup
 bcftools view -cg output.pileup > output.vcf
 
-rm *.sam
-rm *.pileup
-rm *.bam
-rm *.bai
+#rm *.sam
+#rm *.pileup
+#rm *.bam
+#rm *.bai
 
 
 grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
