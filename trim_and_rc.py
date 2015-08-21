@@ -15,7 +15,7 @@ def call_me(name1):
 
 def bowtie_me(name1):
         try:
-                my_command = "bowtie2 —-local --score-min G,130,8 -x ~/bowtie2-2.0.2/All_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U f_unpaired.fq.gz,r_unpaired.fq.gz -S output.sam 2>" +str(name1) + "_bowtie_out"
+                my_command = "bowtie2 —-local --score-min G,130,8 -x ~/bowtie2-2.0.2/All_baits -1 f_paired.fq.gz -2 r_paired.fq.gz  -U f_unpaired.fq.gz,r_unpaired.fq.gz -S output.sam 2>" +str(name1) + "_bowtie_out"
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
                 print ("Problems with bowtie")
