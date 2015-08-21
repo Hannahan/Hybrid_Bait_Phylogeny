@@ -44,6 +44,12 @@ def sort(name1):
         except:
                 print ("Problems with bam_sorted")
 
+def index(name1):
+        try:                
+                my_command = "samtools index bam_sorted.bam"
+                output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
+        except:
+                print ("Problems with index")
 
 def get_rc(name1):
         try:                
@@ -76,6 +82,8 @@ for line in list:
         bowtie_me(name1)
         print ("Trying sort on" + str(name1))
         sort(name1)
+        print ("Trying index on" + str(name1))
+        index(name1)
         print ("Trying get_rc on" + str(name1))
         get_rc(name1)
         print ("Trying clean_up reads on" + str(name1))
