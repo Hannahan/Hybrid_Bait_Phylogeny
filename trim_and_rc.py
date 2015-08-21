@@ -7,7 +7,7 @@ import re
 
 def call_me(name1):
         try:
-                my_command = "smbclient //nased05/EvoDevo -U 'rbg-nt\ckidner%t@tws2bresych' -c 'cd EvoDevo/Hyb_Hiseq_96/  ;prompt;mget *.gz'"
+                my_command = "smbclient //nased05/EvoDevo -U 'rbg-nt\ckidner%t@tws2bresych' -c 'cd EvoDevo/Hyb_Hiseq_96/  ;prompt;mget "+ str(name1) + ".tar.gz'"
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
                 print ("Problems with call")
