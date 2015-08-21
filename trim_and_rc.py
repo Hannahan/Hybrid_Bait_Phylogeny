@@ -53,7 +53,7 @@ def index(name1):
 
 def get_rc(name1):
         try:                
-                my_command = "samtools idxstats bam_sorted.bam |grep -v '^\*' | awk '{ depth=250*$3/$2} {print $1, depth}' | sort > "+str(name)+"_rc.txt"
+                my_command = "samtools idxstats bam_sorted.bam > "+str(name)+"_stats.txt"
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
                 print ("Problems with get_rc")
