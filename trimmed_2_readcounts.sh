@@ -17,7 +17,7 @@ echo "You're working on accession $1"
 call=${acc}.tar.gz
 
 #get raw from server
-smbclient //nased05/EvoDevo -U rbg-nt\\ckidner%t@tws2bresych -c cd\ EvoDevo/Hyb_Hiseq_96/;prompt;mget $call
+smbclient //nased05/EvoDevo -U rbg-nt\\ckidner%t@tws2bresych -c 'cd\ EvoDevo/Hyb_Hiseq_96/;prompt;mget $call'
 tar -zxvf $call
 #bowtie2 --local  --score-min G,130,8 -x ~/bowtie2-2.0.2/All_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U f_unpaired.fq.gz,r_unpaired.fq.gz  -S output.sam 2>bowtie_output
 bowtie2 --local  --score-min G,320,8 -x ~/bowtie2-2.0.2/All_baits-1 $fwd_p  -2 $rev_p  -U $un_p  -S $sam   -S output.sam 2>bowtie_output
