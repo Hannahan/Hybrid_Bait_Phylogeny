@@ -55,7 +55,7 @@ def get_rc(name1):
 
 def untar(name1):
         try:                
-                my_command = "tar -zxvf "+str(name)+".tar.gz"
+                my_command = "tar -zxvf "+str(name1)+".tar.gz"
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
                 print ("Problems with untar")
