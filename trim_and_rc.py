@@ -7,7 +7,7 @@ import re
 
 def call_me(name1):
         try:
-                my_command = "smbclient //nased05/EvoDevo -U 'rbg-nt\ckidner%t@tws2bresych' -c 'cd EvoDevo/Hyb_Hiseq_96/raw_reads/" +str(name1) + "\  ;prompt;mget *.gz'"
+                my_command = "smbclient //nased05/EvoDevo -U 'rbg-nt\ckidner%t@tws2bresych' -c 'cd EvoDevo/Hyb_Hiseq_96/  ;prompt;mget *.gz'"
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
                 print ("Problems with call")
@@ -52,6 +52,13 @@ def get_rc(name1):
         except:
                 print ("Problems with get_rc")
 
+def untar(name1):
+        try:                
+                my_command = "tar -zxvf "+str(name)+".tar.gz"
+                output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
+        except:
+                print ("Problems with untar")
+
 list_file = input("Which file for list accessions to process?\n")
 list_file = list_file.rstrip()
 list = open(list_file)
@@ -63,6 +70,8 @@ for line in list:
         name1 = name1.rstrip()
         print ("Trying call on" + str(name1))
         call_me(name1)
+        print ("Trying untar on" + str(name1))
+        untar(name1)
         print ("Trying bowtie on" + str(name1))
         bowtie_me(name1)
         print ("Trying sort on" + str(name1))
