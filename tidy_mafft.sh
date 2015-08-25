@@ -17,9 +17,10 @@ fna=${acc}.fna
 fasta=${acc}.fasta
 
 sed "s/_$acc//g" $switched > $no_loci_name 
-sed "s/[rywsmkdvhb]/n/g" $fna > $fasta
-tr '[:lower:]'  '[:upper:]' < $no_loci_name > $fna
+sed "s/[rywsmkdvhb]/n/g" $no_loci_name  > $fna
+tr '[:lower:]'  '[:upper:]' < $fna > $fasta
 rm $no_loci_name
+rm $fna
 linsi --thread 8 $fasta > $mafft
 
 
