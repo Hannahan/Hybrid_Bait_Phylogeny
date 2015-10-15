@@ -15,7 +15,7 @@ def call_me(name1):
 
 def bowtie_me(name1):
         try:
-                my_command = "bowtie2 --local --score-min G,130,8 -x ~/bowtie2-2.0.2/All_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U f_unpaired.fq.gz,r_unpaired.fq.gz -S output.sam 2>>" +str(name1) + "_bowtie_out"
+                my_command = "bowtie2 --local --score-min G,130,8 -x ~/bowtie2-2.0.2/All_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U f_unpaired.fq.gz,r_unpaired.fq.gz -S "+ str(name1)+".sam 2>>" +str(name1) + "_bowtie_out"
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
                 print ("Problems with bowtie")
@@ -34,7 +34,7 @@ def return_me(name1):
                 my_command = "smbclient //nased05/EvoDevo -U 'rbg-nt\ckidner%t@tws2bresych' -c 'cd EvoDevo/Inga_Hyb_trimmed/ ;prompt;put " + str(name1) + ".tar.gz'"
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
-                print ("Problems with tar")
+                print ("Problems with return")
 
 
 def clean_up(name1):
@@ -49,7 +49,7 @@ def consensus_me(name1):
                 my_command = "./bam_to_consensus " + str(name1)
                 output = subprocess.call(my_command, shell=True, stderr=subprocess.STDOUT)
         except:
-                print ("Problems with tar")
+                print ("Problems with consensus")
 
 
 
