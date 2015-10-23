@@ -1,18 +1,20 @@
 #! /bin/bash -x
 # to go from raw seq to consensu bam from remote
 # Needs ck_empties.sh and ck_remove.sh
-# Needs to renamethe raw files by their accession names wiht the ends _1.sanfastq.gz _2.sanfastq.gz
-# Catherine Kidner 15 Oct 2015
+# Needs to renamethe raw files by their accession names wiht the ends _1.sanfastq.zip _2.sanfastq.zip
+# Catherine Kidner 21 Oct 2015
 
 
 echo "Hello world"
 
 acc=$1
+F=${acc}_1.sanfastq.gz
+R=${acc}_2.sanfastq.gz
 
 echo "You're working on accession $1"
 
 #Trimmomatic
-java -jar ~/Trimmomatic/Trimmomatic-0.30/trimmomatic-0.30.jar PE -phred33 ../raw_seq/Inga_Baits/$acc_1.sanfastq.gz ../raw_seq/Inga_Baits/$acc_2.sanfastq.gz forward_paired.fq.gz forward_unpaired.fq.gz reverse_paired.fq.gz reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+java -jar ~/Documents/Trimmomatic-0.33/trimmomatic-0.33.jar PE -phred33 $F $R forward_paired.fq.gz forward_unpaired.fq.gz reverse_paired.fq.gz reverse_unpaired.fq.gz ILLUMINACLIP:../Trimmomatic-0-0.33/adapters/TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 
 #cutadapt
 cutadapt -a AGATCGGAAGAGC forward_paired.fq.gz > f_paired.fq.gz 2>> cut_out
