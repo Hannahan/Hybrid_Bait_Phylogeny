@@ -17,10 +17,10 @@ echo "You're working on accession $1"
 java -jar ~/Documents/Trimmomatic-0.33/trimmomatic-0.33.jar PE -phred33 $F $R forward_paired.fq.gz forward_unpaired.fq.gz reverse_paired.fq.gz reverse_unpaired.fq.gz ILLUMINACLIP:../Trimmomatic-0-0.33/adapters/TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 
 #cutadapt
-cutadapt -a AGATCGGAAGAGC forward_paired.fq.gz > f_paired.fq.gz 2>> cut_out
-cutadapt -a AGATCGGAAGAGC reverse_paired.fq.gz > r_paired.fq.gz 2>> cut_out
-cutadapt -a AGATCGGAAGAGC forward_unpaired.fq.gz > f_unpaired.fq.gz 2>> cut_out
-cutadapt -a AGATCGGAAGAGC reverse_unpaired.fq.gz > r_unpaired.fq.gz 2>> cut_out
+cutadapt -a AGATCGGAAGAGC -o f_paired.fq.gz forward_paired.fq.gz  2>> cut_out
+cutadapt -a AGATCGGAAGAGC -o r_paired.fq.gz reverse_paired.fq.gz 2>> cut_out
+cutadapt -a AGATCGGAAGAGC -o f_unpaired.fq.gz forward_unpaired.fq.gz 2>> cut_out
+cutadapt -a AGATCGGAAGAGC -o r_unpaired.fq.gz reverse_unpaired.fq.gz 2>> cut_out
 
 #remove unpaired
 cat f_paired.fq.gz r_paired.fq.gz | grep -B1 "^$" | grep "^@" | cut -f1 -d " " - > All.empties
