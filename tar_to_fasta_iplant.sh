@@ -12,6 +12,7 @@ acc=$1
 tar=${acc}.tar.gz
 F=${acc}_1.sanfastq.gz
 R=${acc}_2.sanfastq.gz
+rc=${acc}_rc.txt
 output=${acc}_consensus.fna
 
 echo "You're working on accession $1"
@@ -48,7 +49,11 @@ bowtie2 --local  --score-min G,130,8 -x ~/bowtie_index/All_baits -1 f_paired.fq.
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
 samtools mpileup -E -uf ~/bowtie_index/All_baits.fna bam_sorted.bam > output.pileup
-bcftools view -cg output.pileup > $output.vcf
+bcftools view -cg output.pileup > output.vcf
+
+#get read_counts - reads 125bp long
+
+samtools idxstats bam_sorted.bam |grep -v "^\*" | awk '{ depth=125*$3/$2} {print $1, depth}' | sort > $rc
 
 rm *.sam
 rm *.pileup
@@ -56,11 +61,14 @@ rm *.pileup
 
 grep -v "INDEL" $output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
-perl vcfutils_fasta.pl vcf2fq clean.vcf > $output
+perl vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
+
+sed ’s/[RYWSMKDVHB]/N/g’ output.fna > $output 
 
 #rm clean.vcf
 #rm *.gz
 #rm *.fq
+
 
 exit 0
 
