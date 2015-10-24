@@ -45,7 +45,8 @@ mv r_unpaired.fq.gz r_unpaired.fq
 #cat r_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 2.fastq.test.gz; mv 2.fastq.test.gz r_paired.fq.gz
 #cat f_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 1.fastq.test.gz; mv 1.fastq.test.gz f_paired.fq.gz
 
-bowtie2 --local  --score-min G,130,8 -x ~/bowtie_index/All_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U f_unpaired.fq,r_unpaired.fq  -S output.sam 2>bowtie_output
+bowtie2 --local  --score-min G,130,8 -x ~/bowtie_index/All_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U f_unpaired.fq,r_unpaired.fq  -S output.sam 2>$acc_bowtie_output
+
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
 samtools mpileup -E -uf ~/bowtie_index/All_baits.fna bam_sorted.bam > output.pileup
@@ -63,7 +64,7 @@ grep -v "INDEL" $output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
 perl vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
 
-sed '/^[^>]/s/[^ATGC]/N/g' output.fna > $output 
+sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
 
 #rm clean.vcf
 #rm *.gz
