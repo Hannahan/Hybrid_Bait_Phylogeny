@@ -19,7 +19,7 @@ echo "You're working on accession $1"
 
 
 #get the trimmed tar from iROD folder and tidying up the old mess
-cp ../iROD/Inga_Baits/$tar ./
+cp ~/Documents/iROD/Inga_Baits/$tar ./
 tar -zxvf $tar
 
 rm forward*
