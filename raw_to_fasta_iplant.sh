@@ -10,8 +10,8 @@ echo "Hello world"
 
 acc=$1
 tar=${acc}.tar.gz
-F=~/Documents/iROD/Inga_baits/${acc}_1.sanfastq.gz
-R=~/Documents/iROD/Inga_baits/${acc}_2.sanfastq.gz
+F=~/Documents/iROD/Inga_Baits/${acc}_1.sanfastq.gz
+R=~/Documents/iROD/Inga_Baits/${acc}_2.sanfastq.gz
 bowtie=${acc}_bowtie_output
 rc=${acc}_rc.txt
 output=${acc}_consensus.fna
