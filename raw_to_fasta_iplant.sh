@@ -1,6 +1,6 @@
 #! /bin/bash -x
 # to go from raw seq to consensus on iplant
-# Assumes files are in form *_1.sanfastq.gz and are in the folder
+# Assumes files are in form *_1.sanfastq.gz and are in the folder ~/Documents/iROD/Inga_baits
 # Assumes you're working in the folder Process - the attached Volume
 
 # Catherine Kidner 23 Oct 2015
@@ -10,8 +10,8 @@ echo "Hello world"
 
 acc=$1
 tar=${acc}.tar.gz
-F=${acc}_1.sanfastq.gz
-R=${acc}_2.sanfastq.gz
+F=~/Documents/iROD/Inga_baits/${acc}_1.sanfastq.gz
+R=~/Documents/iROD/Inga_baits/${acc}_2.sanfastq.gz
 bowtie=${acc}_bowtie_output
 rc=${acc}_rc.txt
 output=${acc}_consensus.fna
