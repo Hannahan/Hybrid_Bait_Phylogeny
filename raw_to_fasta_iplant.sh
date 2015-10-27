@@ -59,6 +59,7 @@ samtools idxstats bam_sorted.bam |grep -v "^\*" | awk '{ depth=125*$3/$2} {print
 rm *.sam
 rm *.pileup
 rm *.bam
+rm *.bai
 rm *.fq
 rm *.gz
 
