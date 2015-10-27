@@ -58,10 +58,10 @@ samtools idxstats bam_sorted.bam |grep -v "^\*" | awk '{ depth=125*$3/$2} {print
 
 rm *.sam
 rm *.pileup
-rm *.bam
-rm *.bai
-rm *.fq
-rm *.gz
+#rm *.bam
+#rm *.bai
+#rm *.fq
+#rm *.gz
 
 grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
