@@ -63,7 +63,7 @@ grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
 vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
 
-sed ’s/[RYWSMKDVHB]/N/g’ output.fna > $output 
+sed '/^[^>]/s/[^ATGC]/N/g' output.fna > $output 
 
 rm clean.vcf
 rm *.gz
