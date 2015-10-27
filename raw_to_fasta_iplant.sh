@@ -69,9 +69,7 @@ perl vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
 
 sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
 
-#rm clean.vcf
-#rm *.gz
-#rm *.fq
+rm *.vcf
 
 
 exit 0
