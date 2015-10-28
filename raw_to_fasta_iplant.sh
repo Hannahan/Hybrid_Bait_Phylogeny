@@ -14,7 +14,7 @@ F=~/Documents/iROD/Inga_Baits/${acc}_1.sanfastq.gz
 R=~/Documents/iROD/Inga_Baits/${acc}_2.sanfastq.gz
 bowtie=${acc}_bowtie_output
 rc=${acc}_rc.txt
-output=${acc}_consensus.fna
+output=$~/Documents/iROD/done_consensus/{acc}_consensus.fna
 
 echo "You're working on accession $1"
 
@@ -70,6 +70,8 @@ perl vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
 sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
 
 rm *.vcf
+
+cp $acc* > ~/Documents/iROD/done_consensus
 
 
 exit 0
