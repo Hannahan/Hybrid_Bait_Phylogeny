@@ -45,7 +45,7 @@ cat f_paired.fq.gz r_paired.fq.gz | grep -B1 "^$" | grep "^@" | cut -f1 -d " " -
 cat r_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 2.fastq.test.gz; mv 2.fastq.test.gz r_paired.fq.gz
 cat f_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 1.fastq.test.gz; mv 1.fastq.test.gz f_paired.fq.gz
 
-bowtie2 --local  --score-min G,130,8 -x ~/bowtie_index/All_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U f_unpaired.fq,r_unpaired.fq  -S output.sam 2> $bowtie
+bowtie2 --local  --score-min G,130,8 -x ~/bowtie_index/All_baits -1 f_paired.fq.gz  -2 r_paired.fq.gz  -U forward_unpaired.fq.gz,reverse_unpaired.fq.gz  -S output.sam 2> $bowtie
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
@@ -58,10 +58,10 @@ samtools idxstats bam_sorted.bam |grep -v "^\*" | awk '{ depth=125*$3/$2} {print
 
 rm *.sam
 rm *.pileup
-#rm *.bam
-#rm *.bai
-#rm *.fq
-#rm *.gz
+rm *.bam
+rm *.bai
+rm *.fq
+rm *.gz
 
 grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
