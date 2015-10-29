@@ -17,7 +17,7 @@ echo "You're working on accession $1"
 
 input=${acc}.fasta
 mafft=${acc}_mafft.fasta
-fasta=${acc}.fasta
+fasta=${acc}_clean.fasta
 strict=${acc}_strict.fna
 summary=${acc}_summary.txt
 
