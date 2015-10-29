@@ -12,9 +12,10 @@ acc=$1
 tar=${acc}.tar.gz
 F=~/Documents/iROD/Inga_Baits/${acc}_1.sanfastq.gz
 R=~/Documents/iROD/Inga_Baits/${acc}_2.sanfastq.gz
-bowtie=${acc}_bowtie_output
-rc=${acc}_rc.txt
+
 output=~/Documents/iROD/done_consensuses/${acc}_consensus.fna
+rc=~/Documents/iROD/done_consensuses/${acc}_rc.txt
+bowtie=~/Documents/iROD/done_consensuses/${acc}_bowtie_output
 
 echo "You're working on accession $1"
 
