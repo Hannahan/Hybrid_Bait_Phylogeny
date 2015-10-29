@@ -15,7 +15,7 @@ acc=$1
 echo "You're working on accession $1"
 
 
-input=${acc}_consensus.fasta
+input=${acc}.fasta
 mafft=${acc}_mafft.fasta
 fasta=${acc}.fasta
 strict=${acc}_strict.fna
