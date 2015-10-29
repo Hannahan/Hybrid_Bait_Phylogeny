@@ -71,8 +71,8 @@ sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output
 
 rm *.vcf
 
-cp *_rc.txt > ~/Documents/iROD/done_consensuses/
-cp *_bowtie_output > ~/Documents/iROD/done_consensuses/
+cp *_rc.txt ~/Documents/iROD/done_consensuses/
+cp *_bowtie_output ~/Documents/iROD/done_consensuses/
 
 rm *_rc.txt
 rm *_bowtie_output
