@@ -33,7 +33,7 @@ trimal -in $mafft -out $strict -strict
 
 # use amas to get summary info for each alignment
 
-python3 ~/Documents/Hybrid_Bait_Phylogeny/amas-0.93/amas/AMAS.py -f fasta -d dna -i $strict -s -o $summary
+python3 ~/Documents/amas-0.93/amas/AMAS.py -f fasta -d dna -i $strict -s -o $summary
 
 
 exit 0
