@@ -18,8 +18,8 @@ echo "You're working on accession $1"
 input=${acc}.fasta
 mafft=${acc}_mafft.fasta
 fasta=${acc}_clean.fasta
-strict=~/Documents/iROD/alignments/${acc}_strict.fna
-summary=~/Documents/iROD/alignments/${acc}_summary.txt
+strict=~/Documents/iROD/Inga_baits_all_acc/${acc}_strict.fna
+summary=~/Documents/iROD/Inga_baits_all_acc/${acc}_summary.txt
 
 #Remove the locus names in the headers and clean up non standard char
 
