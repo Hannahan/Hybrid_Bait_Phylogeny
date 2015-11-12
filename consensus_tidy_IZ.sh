@@ -35,5 +35,9 @@ trimal -in $mafft -out $strict -strict
 
 python3 ~/Documents/amas-0.93/amas/AMAS.py -f fasta -d dna -i $strict -s -o $summary
 
+rm $input
+rm $mafft
+rm $fasta
+
 
 exit 0
