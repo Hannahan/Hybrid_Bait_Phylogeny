@@ -55,7 +55,7 @@ bcftools view -cg output.pileup > output.vcf
 
 #get read_counts - reads 125bp long
 
-samtools idxstats bam_sorted.bam |grep -v "^\*" | awk '{ depth=125*$3/$2} {print $1, depth}' | sort > $rc
+samtools idxstats bam_sorted.bam |grep -v "^\*" | awk '{ depth=250*$3/$2} {print $1, depth}' | sort > $rc
 
 rm *.sam
 rm *.pileup
