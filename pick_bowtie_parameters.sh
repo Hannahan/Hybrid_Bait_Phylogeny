@@ -22,7 +22,7 @@ do
 score=G,${intercept},8
 fwd_p=${acc}_trimmed_1.fastq.gz
 rev_p=${acc}_trimmed_2.fastq.gz
-un_p=${acc}_trimmed_1u.fastq,../trimmed/${acc}_trimmed_2u.fastq
+un_p=${acc}_trimmed_1u.fastq.gz,../trimmed/${acc}_trimmed_2u.fastq.gz
 sam=${acc}.sam
 index=${acc}_${intercept}_sorted.bam
 pileup=${acc}_${intercept}.pileup
@@ -30,7 +30,7 @@ vcf=${acc}_${intercept}.vcf
 bowtie=${acc}_${intercept}_bowtie_output
 sorted=${acc}_${intercept}_sorted
 
-bowtie2 --local --score-min $score -x ~/bowtie_index/All_baits -1 $fwd_p  -2 $rev_p  -U $un_p  -S $sam 2>$bowtie
+bowtie2 --local --score-min $score -x ~/bowtie_index/All_loci -1 $fwd_p  -2 $rev_p  -U $un_p  -S $sam 2>$bowtie
 samtools view -bS $sam | samtools sort - $sorted
 samtools index $index
 samtools mpileup -E -uf Ref_new.fna  $index > $pileup
