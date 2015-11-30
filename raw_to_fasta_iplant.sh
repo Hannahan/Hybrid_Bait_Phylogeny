@@ -51,7 +51,7 @@ bowtie2 --local  --score-min G,120,8 -x ~/bowtie_index/All_loci -1 forward_paire
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
-samtools mpileup -E -uf ~/bowtie_index/All_baits.fna bam_sorted.bam > output.pileup
+samtools mpileup -E -uf ~/bowtie_index/All_loci.fna bam_sorted.bam > output.pileup
 bcftools view -cg output.pileup > $vcf
 
 #get read_counts - reads 125bp long
