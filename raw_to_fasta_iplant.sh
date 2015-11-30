@@ -65,13 +65,15 @@ rm *.bai
 rm *.fq
 rm *.gz
 
-grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
+grep -v "INDEL" $vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
 perl vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
 
 sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
 
 rm clean.vcf
+
+cp $vcf ../iROD/done_consensuses/
 
 exit 0
 
