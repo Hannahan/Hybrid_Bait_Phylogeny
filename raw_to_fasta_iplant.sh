@@ -71,9 +71,9 @@ perl vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
 
 sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
 
-rm clean.vcf
-
 cp $vcf ../iROD/done_consensuses/
+
+rm *.vcf
 
 exit 0
 
