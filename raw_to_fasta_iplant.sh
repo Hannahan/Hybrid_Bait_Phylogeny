@@ -12,6 +12,7 @@ acc=$1
 tar=${acc}.tar.gz
 F=~/Documents/iROD/Inga_Baits/${acc}_1.fastq.gz
 R=~/Documents/iROD/Inga_Baits/${acc}_2.fastq.gz
+vcf=${acc}.vcf
 
 output=~/Documents/iROD/done_consensuses/${acc}_consensus.fna
 rc=~/Documents/iROD/done_consensuses/${acc}_rc.txt
@@ -51,7 +52,7 @@ bowtie2 --local  --score-min G,120,8 -x ~/bowtie_index/All_loci -1 forward_paire
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
 samtools mpileup -E -uf ~/bowtie_index/All_baits.fna bam_sorted.bam > output.pileup
-bcftools view -cg output.pileup > output.vcf
+bcftools view -cg output.pileup > $vcf
 
 #get read_counts - reads 125bp long
 
@@ -70,11 +71,7 @@ perl vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
 
 sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
 
-rm *.vcf
-
-cp *_rc.txt ~/Documents/iROD/done_consensuses/
-cp *_bowtie_output ~/Documents/iROD/done_consensuses/
-
+rm clean.vcf
 
 exit 0
 
