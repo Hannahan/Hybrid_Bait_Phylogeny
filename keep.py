@@ -10,7 +10,7 @@ import fasta_stuff
 
 def get_fasta(name):
 
-	seq = file_dict[name]
+	seq = file_dict.get(name, "empty")
 	fasta = ">" +name + "\n" + seq
 
 
@@ -36,11 +36,12 @@ if keeplist_file != None:
 	
 		print("looking for sequence: " + "\n" + name)
 		fasta_seq = get_fasta(name)
-		if fasta_seq != None:
+		if "empty" in fasta_seq:
+			print (str(name) + " is not there!")
+		else:
 			keep_seq_found +=1
 			keep_output.append(fasta_seq)
-
-
+	
 print("Keep lines processed = " + str(keep_lines_processed))
 print("Keep sequences found = " + str(keep_seq_found))
 
