@@ -21,6 +21,9 @@ vcf=${acc}.vcf
 
 echo "You're working on accession $1"
 
+cp ~/Documents/iROD/$tar ./
+tar -zxvf $tar
+
 bowtie2 --local  --score-min G,130,8 -x ~/bowtie_index/All_loci -1 $F -2 $R -U $Fu,$Ru -S output.sam 2> $bowtie
 
 samtools view -bS output.sam | samtools sort - bam_sorted
@@ -36,8 +39,8 @@ rm *.sam
 rm *.pileup
 rm *.bam
 rm *.bai
-#rm *.gz
-#rm *.fq
+rm *.gz
+rm *.fastq
 
 grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
