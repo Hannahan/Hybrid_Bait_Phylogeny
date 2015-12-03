@@ -10,8 +10,8 @@ echo "Hello world"
 
 acc=$1
 tar=${acc}.tar.gz
-F=${acc}_trimmed_1.fastq
-R=${acc}_trimmed_2.fastq
+F=${acc}_trimmed_1.fastq.gz
+R=${acc}_trimmed_2.fastq.gz
 Fu=${acc}_trimmed_1u.fastq
 Ru=${acc}_trimmed_2u.fastq
 bowtie=${acc}_bowtie_output
