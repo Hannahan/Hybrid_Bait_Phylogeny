@@ -62,8 +62,8 @@ rm *.sam
 rm *.pileup
 rm *.bam
 rm *.bai
-rm *.gz
-rm *.fq
+#rm *.gz
+#rm *.fq
 
 grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
