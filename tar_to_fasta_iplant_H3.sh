@@ -14,9 +14,9 @@ F=${acc}_trimmed_1.fastq.gz
 R=${acc}_trimmed_2.fastq.gz
 Fu=${acc}_trimmed_1u.fastq
 Ru=${acc}_trimmed_2u.fastq
-bowtie=${acc}_bowtie_output
-rc=${acc}_rc.txt
-output=${acc}_consensus.fna
+bowtie=~/Documents/iROD/done_consensus/${acc}_bowtie_output
+rc=~/Documents/iROD/done_consensus/${acc}_rc.txt
+output=~/Documents/iROD/done_consensus/${acc}_consensus.fna
 vcf=${acc}.vcf
 
 echo "You're working on accession $1"
