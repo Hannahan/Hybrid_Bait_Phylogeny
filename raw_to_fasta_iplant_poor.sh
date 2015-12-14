@@ -49,7 +49,7 @@ bowtie2 --local -x ~/bowtie_index/All_loci -1 f_paired.fq.gz  -2 r_paired.fq.gz 
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
-samtools mpileup -E -uf ~/bowtie_index/All_baits.fna bam_sorted.bam > output.pileup
+samtools mpileup -E -uf ~/bowtie_index/All_loci.fna bam_sorted.bam > output.pileup
 bcftools view -cg output.pileup > output.vcf
 
 #get read_counts - reads 125bp long
