@@ -14,9 +14,9 @@ F=${acc}_trimmed_1.fastq.gz
 R=${acc}_trimmed_2.fastq.gz
 Fu=${acc}_trimmed_1u.fastq
 Ru=${acc}_trimmed_2u.fastq
-bowtie=${acc}_bowtie_output
-rc=${acc}_rc.txt
-output=${acc}_consensus.fna
+bowtie=~/Documents/iROD/done_consensuses/${acc}_bowtie_output
+rc=~/Documents/iROD/done_consensuses/${acc}_rc.txt
+output=~/Documents/iROD/done_consensuses/${acc}_consensus.fna
 vcf=${acc}.vcf
 
 echo "You're working on accession $1"
@@ -24,7 +24,8 @@ echo "You're working on accession $1"
 cp ~/Documents/iROD/$tar ./
 tar -zxvf $tar
 
-bowtie2 --local  --score-min G,320,8 -x ~/bowtie_index/All_loci -1 $F -2 $R -U $Fu,$Ru -S output.sam 2> $bowtie
+bowtie2 --local --score-min G,320,8 -x ~/bowtie_index/All_loci -1 $F -2 $R -U $Fu,$Ru -S output.sam 2> $bowtie
+
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
