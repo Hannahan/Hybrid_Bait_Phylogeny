@@ -10,8 +10,7 @@ echo "Hello world"
 
 acc=$1
 
-F=~/Documents/Process/raw_reads/${acc}_1.fastq.gz
-R=~/Documents/Process/raw_reads/${acc}_2.fastq.gz
+tar=${acc}.tar.gz
 
 rc=~/Documents/iROD/done_consensuses/${acc}_rc.txt
 bowtie=~/Documents/iROD/done_consensuses/${acc}_bowtie_output
@@ -21,7 +20,7 @@ echo "You're working on accession $1"
 # leaving the from-trimmed here in case I need to change this in future
 
 #get the trimmed tar from iROD folder and tidying up the old mess
-cp ~/Documents/Process/raw_reads/$tar ./
+cp /raw_reads/$tar ./
 tar -zxvf $tar
 
 rm forward*
