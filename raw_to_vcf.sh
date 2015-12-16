@@ -1,9 +1,9 @@
 #! /bin/bash -x
-# to go from raw seq to consensus on iplant
-# Assumes files are in form *_1.fastq.gz and are in the folder ~/Documents/iROD/raw_reads
+# to go from raw seq to vcf on iplant
+# Assumes files are in form *_1.fastq.gz and are in the folder ~/Documents/Process/raw_reads
 # Assumes you're working in the folder Process - the attached Volume
 
-# Catherine Kidner 23 Oct 2015
+# Catherine Kidner 15 Dec 2015
 
 
 echo "Hello world"
