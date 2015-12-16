@@ -20,7 +20,7 @@ echo "You're working on accession $1"
 # leaving the from-trimmed here in case I need to change this in future
 
 #get the trimmed tar from iROD folder and tidying up the old mess
-cp /raw_reads/$tar ./
+cp raw_reads/$tar ./
 tar -zxvf $tar
 
 rm forward*
