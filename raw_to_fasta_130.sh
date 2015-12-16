@@ -9,9 +9,9 @@
 echo "Hello world"
 
 acc=$1
-tar=${acc}.tar.gz
-F=~/Documents/iROD/raw_reads/${acc}_1.fastq.gz
-R=~/Documents/iROD/raw_reads/${acc}_2.fastq.gz
+
+F=~/Documents/Process/raw_reads/${acc}_1.fastq.gz
+R=~/Documents/Process/raw_reads/${acc}_2.fastq.gz
 
 output=~/Documents/iROD/done_consensuses/${acc}_consensus.fna
 rc=~/Documents/iROD/done_consensuses/${acc}_rc.txt
