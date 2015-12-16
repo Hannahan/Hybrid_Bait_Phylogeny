@@ -23,7 +23,7 @@ summary=~/Documents/iROD/All_H7/${acc}_summary.txt
 
 #Remove the locus names in the headers and clean up non standard char
 
-sed "s/_$acc_consensus.fast//g" $input | sed '/^[^>]/s/[^ATGCactg]/N/g' > $fasta
+sed "s/_consensus_.*//g" $input | sed '/^[^>]/s/[^ATGCactg]/N/g' > $fasta
 
 mafft --auto --thread 8 $fasta > $mafft
 
