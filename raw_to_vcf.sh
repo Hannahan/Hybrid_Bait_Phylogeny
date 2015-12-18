@@ -14,6 +14,8 @@ F=${acc}_trimmed_1.fastq.gz
 R=${acc}_trimmed_2.fastq.gz
 Fu=${acc}_trimmed_1u.fastq
 Ru=${acc}_trimmed_2u.fastq
+mv f_unpaired.fq.gz f_unpaired.fq
+mv r_unpaired.fq.gz r_unpaired.fq
 output=~/Documents/iROD/vcf_for_lyndsey/${acc}.vcf
 bowtie=${acc}_bowtie_out
 
@@ -24,7 +26,7 @@ echo "You're working on accession $1"
 #get the trimmed tar from raw_reads folder and tidying up the old mess
 
 tar -zxf raw_reads/$tar -C ./
-bowtie2 --local  --score-min G,320,8 -x ~/bowtie_index/All_loci -1 $F -2 $R -U $Fu,$Ru -S output.sam 2>$bowtie
+bowtie2 --local  --score-min G,320,8 -x ~/bowtie_index/All_loci -1 f_paired.fq.gz -2 r_paired.fq.gz -U f_unpaired.fq,r_unpaired.fq -S output.sam 2>$bowtie
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
