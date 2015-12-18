@@ -15,6 +15,7 @@ R=${acc}_trimmed_2.fastq.gz
 Fu=${acc}_trimmed_1u.fastq
 Ru=${acc}_trimmed_2u.fastq
 output=~/Documents/iROD/vcf_for_lyndsey/${acc}.vcf
+bowtie=$acc_bowtie_out
 
 echo "You're working on accession $1"
 
