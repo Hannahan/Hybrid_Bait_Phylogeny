@@ -26,7 +26,7 @@ echo "You're working on accession $1"
 #get the trimmed tar from raw_reads folder and tidying up the old mess
 
 tar -zxf raw_reads/$tar -C ./
-bowtie2 --local  --score-min G,320,8 -x ~/bowtie_index/All_loci -1 f_paired.fq.gz -2 r_paired.fq.gz -U f_unpaired.fq,r_unpaired.fq -S output.sam 2>$bowtie
+bowtie2 --local  --score-min G,320,8 -x ~/bowtie_index/All_loci -1 $F -2 $R -U $Fu,$Fr -S output.sam 2>$bowtie
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
