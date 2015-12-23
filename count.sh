@@ -6,4 +6,4 @@ count=${vcf}_count
 out=${vcf}_count.txt
 
 while read f ; do grep -c "$f" $in >> $count ; done < picked_loci
-paste picked loci $count > $out
+paste picked_loci $count | sort -n -k2 > $out
