@@ -14,7 +14,7 @@ while read f ; do grep -m 1000 "$f" $vcf >> $1K ; done < For_pop_gen
 #Per locus per accession count the polymorphisms from the ref
 #loop through loci and accessions with:
 
-while read f ; do grep "$f" $1K | grep "GT:PL:GQ" | grep  :[3-9][0-9]$ > $poly ; done < For_pop_gene
+while read f ; do grep "$f" $1K | grep "GT:PL:GQ" | grep  :[3-9][0-9]$ >> $poly ; done < For_pop_gen
 
 #Per accession pair pull out the un-shared polymorphisms and count these per locus
 #join -v 1 set1_poly set2_poly > dif
