@@ -25,3 +25,4 @@ while read f ; do grep "$f" $1K | grep "GT:PL:GQ" | grep  :[3-9][0-9]$ > $poly ;
 
 exit 0
 
+
