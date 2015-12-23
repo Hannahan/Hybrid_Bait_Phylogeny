@@ -23,5 +23,6 @@ while read f ; do grep "$f" $1K | grep "GT:PL:GQ" | grep  :[3-9][0-9]$ > $poly
 #Per accession pair count how many of the un-shared polymorphisms to ref are heterozygous
 #The counts for the shared polymorphisms to ref and the shared heterozygous polymorphism to ref will be calculated
 
+exit 0
 
 
