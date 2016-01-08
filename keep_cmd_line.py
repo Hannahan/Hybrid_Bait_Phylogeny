@@ -24,11 +24,12 @@ keep_lines_processed = 0
 keep_seq_found = 0
 
 for line in fileinput.input():
-
+	line = line.rstrip("\n")
+	print(line)
 
 #Make dicts of the fasta sequences in each file with the fasta-line as the key
 
-	file_dict = fasta_stuff.fasta_dict(fastafile)
+	file_dict = fasta_stuff.fasta_dict(line)
 
 	keeplist_file = 'keep_list'
 
@@ -52,6 +53,6 @@ for line in fileinput.input():
 	outfile = open(out_name, "w")
 	outfile.write("\n".join(keep_output))
 	outfile.close()
-	
-			
+	keep_output = []
+
 	
