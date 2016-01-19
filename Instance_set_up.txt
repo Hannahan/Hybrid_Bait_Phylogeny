@@ -55,7 +55,7 @@ ATTATCHiRODs
 
 Set up bowtie inex!
 
-cp iROD/All_loci.fna Hybrid_Bait_Phylogeny/
+cp iROD/All_loci.fna ./
 
 bowtie2-build -f All_loci.fna All_loci
 
