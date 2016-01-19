@@ -16,6 +16,7 @@ R=~/Process/raw_reads/${acc}_2.fastq.gz
 output=~/iROD/done_consensuses/${acc}_consensus.fna
 rc=~/iROD/done_consensuses/${acc}_rc.txt
 bowtie=~/iROD/done_consensuses/${acc}_bowtie_output
+vcf=${acc}_clean.vcf
 
 echo "You're working on accession $1"
 
@@ -64,9 +65,9 @@ rm *.bai
 rm *.fq
 rm *.gz
 
-grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
+grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > $vcf
 
-perl vcfutils_fasta.pl vcf2fq clean.vcf > $output
+perl vcfutils_fasta.pl vcf2fq $vcf > $output
 
 #sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
 
