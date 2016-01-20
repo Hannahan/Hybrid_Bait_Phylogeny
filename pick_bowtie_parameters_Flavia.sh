@@ -20,8 +20,8 @@ while [ $intercept -le $n2 ]
 do
 
 score=G,${intercept},8
-fwd_p=${acc}_forward_paired_1.fq.gz
-rev_p=${acc}_reverse_paired_1.fq.gz
+fwd_p=${acc}_forward_paired.fq.gz
+rev_p=${acc}_reverse_paired.fq.gz
 un_p=${acc}_forward_unpaired.fq.gz
 sam=${acc}.sam
 index=${acc}_${intercept}_sorted.bam
