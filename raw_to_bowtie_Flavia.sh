@@ -13,10 +13,10 @@
 echo "Hello world"
 
 acc=$1
-F=~/Documents/iROD/Flavia/${acc}_1.fastq.gz
-R=~/Documents/iROD/Flavia/${acc}_2.fastq.gz
+F=~/iROD/Flavia/${acc}_1.fastq.gz
+R=~/iROD/Flavia/${acc}_2.fastq.gz
 
-bowtie=~/Documents/iROD/Flavia/${acc}_standard_bowtie_output
+bowtie=~/iROD/Flavia/${acc}_standard_bowtie_output
 
 echo "You're working on accession $1"
 
