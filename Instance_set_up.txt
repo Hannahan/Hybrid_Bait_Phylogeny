@@ -53,7 +53,9 @@ ATTATCHiRODs
 ~/Documents$ cp iROD/Trimmomatic-0.33.zip ./
 ~/Documents$ unzip Trimmomatic-0.33.zip 
 
-Set up bowtie inex!
+SET UP BOWTIE INDEX
+
+cd bowtie_index/
 
 cp iROD/All_loci.fna ./
 
