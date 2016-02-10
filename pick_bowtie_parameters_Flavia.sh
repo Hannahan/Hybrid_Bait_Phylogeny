@@ -20,9 +20,9 @@ while [ $intercept -le $n2 ]
 do
 
 score=G,${intercept},8
-fwd_p=${acc}_trimmed_1.fastq.gz
-rev_p=${acc}_trimmed_2.fastq.gz
-un_p=${acc}_trimmed_1u.fastq.gz,../trimmed/${acc}_trimmed_2u.fastq.gz
+fwd_p=${acc}_forward_paired_1.fq.gz
+rev_p=${acc}_reverse_paired_1.fq.gz
+un_p=${acc}_forward_unpaired.fq.gz
 sam=${acc}.sam
 index=${acc}_${intercept}_sorted.bam
 pileup=${acc}_${intercept}.pileup
