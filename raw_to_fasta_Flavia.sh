@@ -15,13 +15,13 @@
 echo "Hello world"
 
 acc=$1
-F=~/Documents/iROD/Flavia/${acc}_1.fastq.gz
-R=~/Documents/iROD/Flavia/${acc}_2.fastq.gz
+F=~/iROD/Flavia/${acc}_1.fastq.gz
+R=~/iROD/Flavia/${acc}_2.fastq.gz
 vcf=${acc}.vcf
 
-output=~/Documents/iROD/Flavia/${acc}_consensus.fna
-rc=~/Documents/iROD/Flavia/${acc}_rc.txt
-bowtie=~/Documents/iROD/Flavia/${acc}_bowtie_output
+output=~/iROD/Flavia/${acc}_consensus.fna
+rc=~/iROD/Flavia/${acc}_rc.txt
+bowtie=~/iROD/Flavia/${acc}_bowtie_output
 
 echo "You're working on accession $1"
 
