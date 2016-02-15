@@ -40,7 +40,7 @@ java -jar ~/Trimmomatic-0.33/trimmomatic-0.33.jar PE -phred33 $F $R forward_pair
 #cat r_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 2.fastq.test.gz; mv 2.fastq.test.gz r_paired.fq.gz
 #cat f_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 1.fastq.test.gz; mv 1.fastq.test.gz f_paired.fq.gz
 
-bowtie2 --local  --score-min G,170,8 -x ~/bowtie_index/Ceiba_baits -1 forward_paired.fq.gz  -2 reverse_paired.fq.gz  -U forward_unpaired.fq.gz,reverse_unpaired.fq.gz  -S output.sam 2> $bowtie
+bowtie2 --local --score-min G,190,8 -x ~/bowtie_index/Ceiba_baits -1 forward_paired.fq.gz  -2 reverse_paired.fq.gz  -U forward_unpaired.fq.gz,reverse_unpaired.fq.gz  -S output.sam 2> $bowtie
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
