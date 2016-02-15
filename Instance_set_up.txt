@@ -55,7 +55,11 @@ ATTATCHiRODs
 
 Set up bowtie inex!
 
-cp iROD/All_loci.fna ./
+mkdir bowtie_index/
+
+cd bowtie_index/
+
+cp ../iROD/All_loci.fna ./
 
 bowtie2-build -f All_loci.fna All_loci
 
