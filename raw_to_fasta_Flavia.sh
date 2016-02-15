@@ -1,36 +1,29 @@
 #! /bin/bash -x
-# to go from raw seq to consensus on iplant
-# Assumes files are in form *_1.sanfastq.gz and are in the folder ~/Documents/Process/Inga_baits
+# to go from raw seq to consensus on iplant for Flavia
+# Assumes files are in form *_1.fastq.gz and are in the folder ~/Documents/iROD/Flavia/
 # Assumes you're working in the folder Process - the attached Volume
+# Runs as a while loop: 
+# Make a list of the accession names:
+# make a folder for the vcfs (may want to check these later, but they are large so leave on Process volume instead of iROD):
+# mkdir vcf/
+# ls *_1.fastq.gz | sed 's/_1\.fastq\.gz//g' > accession_names
+# while read f ; do ~/Hybrid_Bait_Phylogeny/raw_to_fasta_Flavia.sh "$f" ; done < accession_names
 
-# Catherine Kidner 23 Oct 2015
+# Catherine Kidner 10 Feb 2016
 
 
 echo "Hello world"
 
 acc=$1
+F=~/iROD/Flavia/${acc}_1.fastq.gz
+R=~/iROD/Flavia/${acc}_2.fastq.gz
+vcf=${acc}.vcf
 
-F=~/Process/raw_reads/${acc}_1.fastq.gz
-R=~/Process/raw_reads/${acc}_2.fastq.gz
-
-output=~/iROD/done_consensuses/${acc}_consensus.fna
-rc=~/iROD/done_consensuses/${acc}_rc.txt
-bowtie=~/iROD/done_consensuses/${acc}_bowtie_output
-vcf=${acc}_clean.vcf
+output=~/iROD/Flavia/${acc}_consensus.fna
+rc=~/iROD/Flavia/${acc}_rc.txt
+bowtie=~/iROD/Flavia/${acc}_bowtie_output
 
 echo "You're working on accession $1"
-
-# leaving the from-trimmed here in case I need to change this in future
-
-#get the trimmed tar from iROD folder and tidying up the old mess
-#cp ~/Documents/iROD/Inga_Baits/$tar ./
-#tar -zxvf $tar
-
-#rm forward*
-#rm reverse*
-
-#mv f_unpaired.fq.gz f_unpaired.fq
-#mv r_unpaired.fq.gz r_unpaired.fq
 
 #Trimmomatic
 java -jar ~/Trimmomatic-0.33/trimmomatic-0.33.jar PE -phred33 $F $R forward_paired.fq.gz forward_unpaired.fq.gz reverse_paired.fq.gz reverse_unpaired.fq.gz ILLUMINACLIP:../Trimmomatic-0-0.33/adapters/TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
@@ -47,16 +40,16 @@ java -jar ~/Trimmomatic-0.33/trimmomatic-0.33.jar PE -phred33 $F $R forward_pair
 #cat r_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 2.fastq.test.gz; mv 2.fastq.test.gz r_paired.fq.gz
 #cat f_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 1.fastq.test.gz; mv 1.fastq.test.gz f_paired.fq.gz
 
-bowtie2 --local  --score-min G,130,8 -x ~/bowtie_index/All_loci -1 forward_paired.fq.gz  -2 reverse_paired.fq.gz  -U forward_unpaired.fq.gz,reverse_unpaired.fq.gz  -S output.sam 2> $bowtie
+bowtie2 --local  --score-min G,190,8 -x ~/bowtie_index/Ceiba_baits -1 forward_paired.fq.gz  -2 reverse_paired.fq.gz  -U forward_unpaired.fq.gz,reverse_unpaired.fq.gz  -S output.sam 2> $bowtie
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
-samtools mpileup -E -uf ~/bowtie_index/All_loci.fna bam_sorted.bam > output.pileup
-bcftools view -cg output.pileup > output.vcf
+samtools mpileup -E -uf ~/bowtie_index/Ceiba_baits.fna bam_sorted.bam > output.pileup
+bcftools view -cg output.pileup > $vcf
 
 #get read_counts - reads 125bp long
 
-samtools idxstats bam_sorted.bam |grep -v "^\*" | awk '{ depth=125*$3/$2} {print $1, depth}' | sort > $rc
+samtools idxstats bam_sorted.bam |grep -v "^\*" | awk '{ depth=150*$3/$2} {print $1, depth}' | sort > $rc
 
 rm *.sam
 rm *.pileup
@@ -65,11 +58,13 @@ rm *.bai
 rm *.fq
 rm *.gz
 
-grep -v "INDEL" output.vcf | awk '{if ($6 >= 36) print $0}' > $vcf
+grep -v "INDEL" $vcf | awk '{if ($6 >= 36) print $0}' > clean.vcf
 
-perl vcfutils_fasta.pl vcf2fq $vcf > $output
+perl vcfutils_fasta.pl vcf2fq clean.vcf > output.fna
 
-#sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
+sed '/^[^>]/s/[^ATGCactg]/N/g' output.fna > $output 
+
+mv $vcf vcf_files/
 
 #rm *.vcf
 

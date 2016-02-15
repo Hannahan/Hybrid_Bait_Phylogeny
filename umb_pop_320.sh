@@ -23,7 +23,7 @@ echo "You're working on accession $1"
 
 # leaving the from-trimmed here in case I need to change this in future
 
-get the trimmed tar from iROD folder and tidying up the old mess
+#get the trimmed tar from iROD folder and tidying up the old mess
 cp ~/Process/raw_reads/$tar ./
 tar -zxvf $tar
 
@@ -42,7 +42,7 @@ tar -zxvf $tar
 #cat r_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 2.fastq.test.gz; mv 2.fastq.test.gz r_paired.fq.gz
 #cat f_paired.fq.gz | paste - - - - | grep -F -v -w -f All.empties - | tr "\t" "\n" | gzip > 1.fastq.test.gz; mv 1.fastq.test.gz f_paired.fq.gz
 
-bowtie2 --local  --score-min G,320,8 -x ~/bowtie_index/All_loci -1 ${acc}_trimmed_1.fastq  -2 ${acc}_trimmed_2.fastq  -U ${acc}_trimmed_1u.fastq,${acc}_trimmed_2u.fastq  -S output.sam 2> $bowtie
+bowtie2 --local  --score-min G,320,8 -x ~/bowtie_index/All_loci -1 ${acc}_trimmed_1.fastq.gz  -2 ${acc}_trimmed_2.fastq.gz  -U ${acc}_trimmed_1u.fastq,${acc}_trimmed_2u.fastq  -S output.sam 2> $bowtie
 
 samtools view -bS output.sam | samtools sort - bam_sorted
 samtools index bam_sorted.bam
