@@ -19,9 +19,9 @@ F=~/iROD/Flavia/${acc}_1.fastq.gz
 R=~/iROD/Flavia/${acc}_2.fastq.gz
 vcf=${acc}.vcf
 
-output=~/iROD/Flavia/${acc}_consensus.fna
-rc=~/iROD/Flavia/${acc}_rc.txt
-bowtie=~/iROD/Flavia/${acc}_bowtie_output
+output=${acc}_consensus.fna
+rc=${acc}_rc.txt
+bowtie=${acc}_bowtie_output
 
 echo "You're working on accession $1"
 
