@@ -30,7 +30,7 @@ trimal -in $mafft -out $strict -strict
 
 # use amas to get summary info for each alignment
 
-python3 ~/amas-0.93/amas/AMAS.py -f fasta -d dna -i $strict -s -o $summary
+python ~/amas-0.93/amas/AMAS.py -f fasta -d dna -i $strict -s -o $summary
 
 rm $input
 rm $mafft
