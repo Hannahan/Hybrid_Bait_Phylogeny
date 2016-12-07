@@ -10,8 +10,8 @@ echo "Hello world"
 
 acc=$1
 
-F=~${acc}_1.fastq.gz
-R=~${acc}_2.fastq.gz
+F=${acc}_1.fastq.gz
+R=${acc}_2.fastq.gz
 
 output=~/iROD/${acc}_consensus.fna
 rc=~/iROD/${acc}_rc.txt
