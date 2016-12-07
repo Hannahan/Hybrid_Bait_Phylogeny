@@ -13,9 +13,9 @@ acc=$1
 F=${acc}_1.fastq.gz
 R=${acc}_2.fastq.gz
 
-output=~/iROD/${acc}_consensus.fna
-rc=~/iROD/${acc}_rc.txt
-bowtie=~/ROD/${acc}_bowtie_output
+output=${acc}_consensus.fna
+rc=${acc}_rc.txt
+bowtie=${acc}_bowtie_output
 
 echo "You're working on accession $1"
 
